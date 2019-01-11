@@ -33,30 +33,30 @@ int main(int argc, char* argv[])
 	
 	HWND hcWnd = NULL;
 	HDC hDc, memDc;
-	hcWnd = FindWindow(NULL, "Task Manager");//Í¨¹ı´°¿ÚÃû»ñÈ¡¾ä±ú
-	hDc = GetDC(hcWnd);//È¡µÃ×ÀÃæÉè±¸ hdc  
-	memDc = CreateCompatibleDC(hDc);//´´½¨ÓëHDC£¨×ÀÃæ£©¼æÈİµÄÉè±¸memDc  
+	hcWnd = FindWindow(NULL, "Task Manager");//é€šè¿‡çª—å£åè·å–å¥æŸ„
+	hDc = GetDC(hcWnd);//å–å¾—æ¡Œé¢è®¾å¤‡ hdc  
+	memDc = CreateCompatibleDC(hDc);//åˆ›å»ºä¸HDCï¼ˆæ¡Œé¢ï¼‰å…¼å®¹çš„è®¾å¤‡memDc  
 	HBITMAP hBitMap;
-	//HWND hWnd = GetDesktopWindow();//µÃµ½×ÀÃæ¾ä±ú  
+	//HWND hWnd = GetDesktopWindow();//å¾—åˆ°æ¡Œé¢å¥æŸ„  
 	RECT rect;
 	int width = 0, hight = 0, prevw = 0, prevh = 0;
 
-	cout << VERSION(MAINVER, SUBVER1, SUBVER2) << endl;//Ã»ÎÊÌâ
+	cout << VERSION(MAINVER, SUBVER1, SUBVER2) << endl;//åœ¨ç¼–è¯‘å™¨å†…å¯èƒ½ä¼šæ˜¾ç¤ºçº¢çº¿ï¼Œä½†æ˜¯èƒ½æ­£å¸¸ç¼–è¯‘
 	cout << "\** successfully load program **/" << endl;
-	while (waitKey(50) != 27 && IsWindow(hcWnd))//µ±°´ÏÂESC»òÕßÓ¦ÓÃ´°¿ÚÍË³öÊ±ÍË³ö³ÌĞò  
+	while (waitKey(50) != 27 && IsWindow(hcWnd))//å½“æŒ‰ä¸‹ESCæˆ–è€…åº”ç”¨çª—å£é€€å‡ºæ—¶é€€å‡ºç¨‹åº  
 	{
-		GetWindowRect(hcWnd, &rect);//×ÀÃæµÄ¾ØĞÎ 
+		GetWindowRect(hcWnd, &rect);//æ¡Œé¢çš„çŸ©å½¢ 
 		width = rect.right - rect.left;
 		hight = rect.bottom - rect.top;
-		if (prevw != width || prevh != hight)//µ±´°¿Ú´óĞ¡¸Ä±äÊ±´òÓ¡ĞÂ´óĞ¡
+		if (prevw != width || prevh != hight)//å½“çª—å£å¤§å°æ”¹å˜æ—¶æ‰“å°æ–°å¤§å°
 		{
 			cout << "width:" << width << " " << "hight:" << hight << endl;
 			prevw = width;
 			prevh = hight;
 		}
-		hBitMap = CreateCompatibleBitmap(hDc, width, hight);//´´½¨Óë×ÀÃæ¼æÈİµÄ»­²¼  
-		SelectObject(memDc, hBitMap);//¹ØÁªÉè±¸ºÍ»­²¼  
-		BitBlt(memDc, 0, 0, width, hight, hDc, 0, 0, SRCCOPY);//°É×ÀÃæÍù¼æÈİÉè±¸Àï¸´ÖÆ  
+		hBitMap = CreateCompatibleBitmap(hDc, width, hight);//åˆ›å»ºä¸æ¡Œé¢å…¼å®¹çš„ç”»å¸ƒ  
+		SelectObject(memDc, hBitMap);//å…³è”è®¾å¤‡å’Œç”»å¸ƒ  
+		BitBlt(memDc, 0, 0, width, hight, hDc, 0, 0, SRCCOPY);//æŠŠæ¡Œé¢å¾€å…¼å®¹è®¾å¤‡é‡Œå¤åˆ¶  
 		IplImage* src = hBitmapToIpl(hBitMap);
 		cvNamedWindow("Fetched Window");
 		cvShowImage("Fetched Window", src);
@@ -104,10 +104,10 @@ int vision(void)
 	VideoCapture camera1(0), camera2(1);
 	int cam_count;
 	double fps;
-	char buff[10];  // ÓÃÓÚ´æ·ÅÖ¡ÂÊµÄ×Ö·û´®
+	char buff[10];  // ç”¨äºå­˜æ”¾å¸§ç‡çš„å­—ç¬¦ä¸²
 	double t = 0;
 	int prevw1 = 0, prevw2 = 0, prevh1 = 0, prevh2 = 0;
-	//camera1.set(CV_CAP_PROP_FRAME_WIDTH, 1080); //ÎŞ·¨µ÷Õû£¬Ä¬ÈÏÎªVideoCapture  640*480
+	//camera1.set(CV_CAP_PROP_FRAME_WIDTH, 1080); //æ— æ³•è°ƒæ•´ï¼Œé»˜è®¤ä¸ºVideoCapture  640*480
 	//camera1.set(CV_CAP_PROP_FRAME_HEIGHT, 960);
 	//camera2.set(CV_CAP_PROP_FRAME_WIDTH, 1080);
 	//camera2.set(CV_CAP_PROP_FRAME_HEIGHT, 960);
@@ -125,14 +125,14 @@ int vision(void)
 
 			t = ((double)getTickCount() - t) / getTickFrequency();
 			fps = 1.0 / t;
-			sprintf_s(buff, "%.2f", fps, 100);      // Ö¡ÂÊ±£ÁôÁ½Î»Ğ¡Êı
+			sprintf_s(buff, "%.2f", fps, 100);      // å¸§ç‡ä¿ç•™ä¸¤ä½å°æ•°
 			string fpsString("FPS:");
-			fpsString += buff;                    // ÔÚ"FPS:"ºó¼ÓÈëÖ¡ÂÊÊıÖµ×Ö·û´®
+			fpsString += buff;                    // åœ¨"FPS:"ååŠ å…¥å¸§ç‡æ•°å€¼å­—ç¬¦ä¸²
 			if (prevw1 != frame1.cols || prevw2 != frame1.cols || prevh1 != frame1.rows || prevh2 != frame1.rows)
 			{
 				//printf("fps: %.2f width:%d height:%d fps:%.2f\n", fps, frame.cols, frame.rows, capture.get(CV_CAP_PROP_FPS));
-				cout << "camera1 fps:" << fixed << setprecision(2) << fps << " width: " << frame1.cols << " height: " << frame1.rows << " cvfps: " << camera1.get(CV_CAP_PROP_FPS) << endl; //(CV_CAP_PROP_FPS Ö»ÏÔÊ¾0£¬Ô­ÒòÎ´Öª)
-																																															//<< " MaxWidth " << camera1.get(CV_CAP_PROP_FRAME_WIDTH) << " MAxHeight " << camera1.get(CV_CAP_PROP_FRAME_HEIGHT) << endl; //ÎŞ·¨»ñµÃÕæÊÇ·Ö±æÂÊ
+				cout << "camera1 fps:" << fixed << setprecision(2) << fps << " width: " << frame1.cols << " height: " << frame1.rows << " cvfps: " << camera1.get(CV_CAP_PROP_FPS) << endl; //(CV_CAP_PROP_FPS åªæ˜¾ç¤º0ï¼ŒåŸå› æœªçŸ¥)
+																																															//<< " MaxWidth " << camera1.get(CV_CAP_PROP_FRAME_WIDTH) << " MAxHeight " << camera1.get(CV_CAP_PROP_FRAME_HEIGHT) << endl; //æ— æ³•è·å¾—çœŸæ˜¯åˆ†è¾¨ç‡
 				cout << "camera2 fps:" << fixed << setprecision(2) << fps << " width: " << frame2.cols << " height: " << frame2.rows << " cvfps: " << camera2.get(CV_CAP_PROP_FPS) << endl;
 				//<< " MaxWidth " << camera2.get(CV_CAP_PROP_FRAME_WIDTH) << " MAxHeight " << camera2.get(CV_CAP_PROP_FRAME_HEIGHT) << endl;
 				prevw1 = frame1.cols; prevw2 = frame1.cols; prevh1 = frame1.rows; prevh2 = frame1.rows;
